@@ -2,11 +2,7 @@ version: '3'
 services:
   # MySQL 服务
   mysql_gpt:
-    restart: always
-    build:
-      context: ./
-      dockerfile: Dockerfile_mysql
-    image: chatgpt-web-java-mysql:1.0.0
+    image: hncboy/chatgpt-web-java-mysql:latest
     container_name: mysql_gpt
 #    ports:
 #      - 3309:3306
@@ -23,17 +19,13 @@ services:
       retries: 5
   # Java 服务
   java_gpt:
-    restart: always
-    build: 
-      context: ./
-      dockerfile: Dockerfile
-    image: chatgpt-web-java:1.0.0
+    image: hncboy/chatgpt-web-java:latest
     container_name: java_gpt
     environment:
       # 这里要用 mysql_gpt 的 3306 端口
       - JDBC_URL=jdbc:mysql://mysql_gpt:3306/chat?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
       - MYSQL_USER_NAME=root
-      - MYSQL_PASSWORD=P@ssw0rd123
+      - MYSQL_PASSWORD=123456
       - CHAT_OPENAI_API_KEY=xxx
       - CHAT_OPENAI_ACCESS_TOKEN=
       - CHAT_OPENAI_API_BASE_URL=https://api.openai.com/
@@ -42,7 +34,7 @@ services:
       - 3002:3002
     depends_on:
       - mysql_gpt
-    #restart: on-failure
+    restart: on-failure
     networks:
       gpt_network:
 
