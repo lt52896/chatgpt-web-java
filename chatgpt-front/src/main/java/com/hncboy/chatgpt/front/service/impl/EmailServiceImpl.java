@@ -79,6 +79,6 @@ public class EmailServiceImpl implements EmailService {
      * @return 响应
      */
     protected String sendMessage(String targetEmail, String content) {
-        return MailUtil.send(mailAccount, targetEmail, "【StarGPT】账号注册", content, true);
+        return MailUtil.send(mailAccount, targetEmail, "【途铃GPT】账号注册", content, true);
     }
 }
